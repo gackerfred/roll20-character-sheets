@@ -692,8 +692,8 @@
 
 .sheet-rolltemplate-dh1ed .inlinerollresult {
 	padding         : 0;
-	background-color: transparent;
-	border          : none;
+	background-color: transparent !important;
+	border          : none !important;
 }
 
 .sheet-rolltemplate-dh1ed .sheet-inlinerollresult {
