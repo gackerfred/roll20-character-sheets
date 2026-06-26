@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Rationale&display=swap');
 
-/* TODO Remove!
-select[multiple]:focus option:checked {
-  background: #f26723 linear-gradient(0deg, #f26723 0%, #f26723 100%);
-}
-*/
-
 /* Default element overrides */
 h4 {
     font-size: 1.2em !important;
@@ -33,11 +27,13 @@ p {
     font-family: "Rationale", sans-serif;
     font-size: inherit;
 }
+
 /* Top level character sheet overrides for our background and font */
 .charsheet {
     background-color: #ededed;
     font-family: "Rationale", sans-serif;
     font-size: 1.2em !important;
+    min-width: 825px;
 }
 
 /* Tabs */
@@ -51,12 +47,18 @@ p {
 .sheet-pc,
 .sheet-npc,
 .sheet-animal,
+.sheet-robot,
 .sheet-ship,
 .sheet-shipdetails,
+.sheet-shipcombat,
+.sheet-shipcrew,
+.sheet-shipslocker,
+.sheet-shipsledger,
 .sheet-shipnotes,
 .sheet-passengers,
 .sheet-freight,
 .sheet-speculative,
+.sheet-salvage,
 .sheet-tradelog,
 .sheet-trade,
 .sheet-help,
@@ -103,6 +105,13 @@ p {
     opacity: 1;
 }
 
+.sheet-typetoggle[value="robot"] ~ .sheet-robot {
+    display: block;
+    animation-name: slide-in;
+    animation-duration: 1s;
+    opacity: 1;
+}
+
 .sheet-typetoggle[value="ship"] ~ .sheet-ship {
     display: block;
     animation-name: slide-in;
@@ -119,6 +128,10 @@ p {
     font-size: 1em;
 }
 
+.sheet-shiptype[value="shipcombat"] ~ .sheet-shipcombat,
+.sheet-shiptype[value="shipcrew"] ~ .sheet-shipcrew,
+.sheet-shiptype[value="shipslocker"] ~ .sheet-shipslocker,
+.sheet-shiptype[value="shipsledger"] ~ .sheet-shipsledger,
 .sheet-shiptype[value="shipnotes"] ~ .sheet-shipnotes {
     display: block;
     animation-name: slide-in;
@@ -186,6 +199,14 @@ p {
     opacity: 1;
 }
 
+.sheet-tradetoggle[value="salvage"] ~ .sheet-salvage {
+    display: block;
+    margin-left: 3px;
+    animation-name: slide-in;
+    animation-duration: 1s;
+    opacity: 1;
+}
+
 .sheet-tradetoggle[value="tradelog"] ~ .sheet-tradelog {
     display: block;
     margin-left: 3px;
@@ -209,6 +230,7 @@ p {
 /* Container styles */
 div.sheet-tab-content {
     border: 2px solid #f26723;
+    border-radius: 3px;
     margin: 2px 2px 5px -5px;
     padding: 5px;
 }
@@ -268,6 +290,19 @@ input[type="number"]:hover {
 .sheet-redborder {
     border: #f26723 solid 1px !important;
     padding: 4px;
+    border-radius: 3px;
+}
+
+.sheet-redborder + .sheet-redborder {
+    margin-top: 3px;
+}
+
+.sheet-redborder > h4 {
+    margin-bottom: 3px;
+}
+
+.sheet-redborder:last-child {
+    margin-bottom: 0;
 }
 
 .sheet-redborder textarea {
@@ -296,7 +331,7 @@ input[type="number"]:hover {
 }
 
 .sheet-bold span:first-child {
-    margin-left: 3px;
+/*    margin-left: 3px;*/
 }
 
 .sheet-bordered-width {
@@ -489,7 +524,7 @@ input[type="number"].sheet-weaponweight::-webkit-inner-spin-button {
 
 .sheet-weaponroll,
 .sheet-weaponspacer {
-    width: 25px;
+    width: 25px !important;
     margin-bottom: 2px !important;
 }
 
@@ -498,14 +533,15 @@ input[type="number"].sheet-weaponweight::-webkit-inner-spin-button {
     color: #f26723;
     font-size: 0.8em;
     margin-left: -1px;
+    margin-top: 3px;
 }
 
 .sheet-weaponspacer {
     display: inline-block;
 }
 
-.sheet-weaponweapon {
-    width: 207px;
+.sheet-wideinput {
+    width: 220px !important;
 }
 
 .sheet-weaponskill {
@@ -543,10 +579,14 @@ input.sheet-weaponweight {
 }
 
 /* Tables */
-sheet-ship-funds {
-    margin-right: auto;
-    margin-left: auto;
+.sheet-ship-funds {
+    margin-right: auto !important;
+    margin-left: auto !important;
     width: 98%;
+}
+
+.sheet-ship-funds h4 {
+    margin-top: 5px;
 }
 
 /* -Headings and elements */
@@ -558,6 +598,17 @@ h2 {
 
 h3 {
     font-size: 1.5em;
+    margin-left: 3px;
+}
+
+h4 {
+    font-size: 1.2em !important;
+    margin-left: 3px;
+}
+
+h5 {
+    font-size: 1em !important;
+    margin-left: 3px;
 }
 
 textarea {
@@ -703,7 +754,6 @@ span.button.sheet-button_header {
 
 .sheet-button_header_rep {
     display: inline-block;
-    font-weight: bold;
     margin: 0px;
     padding: 0px;
     font-size: 0.8em;
@@ -790,7 +840,7 @@ input.sheet-rollselect[value="bane"] ~ .sheet-button:not(.sheet-roll_bane) {
 
 .sheet-mod_toggle button,
 .sheet-roll_toggle button {
-    width: 12vw !important;
+    width: 8vw !important;
 }
 
 .sheet-mod-switch[value="1"] ~ .sheet-mod_toggle,
@@ -803,6 +853,12 @@ input.sheet-rollselect[value="bane"] ~ .sheet-button:not(.sheet-roll_bane) {
 .sheet-mod-switch[value="3"] ~ .sheet-mod_toggle,
 .sheet-roll-switch[value="3"] ~ .sheet-roll_toggle {
     display: inline
+}
+
+.sheet-dicerollbutton {
+    font-family: "Pictos";
+    color: #f26723;
+    font-size: 0.8em !important;
 }
 
 /* Sheet 2 colrow */
@@ -819,7 +875,7 @@ input.sheet-rollselect[value="bane"] ~ .sheet-button:not(.sheet-roll_bane) {
 
 .sheet-gear_grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 0.8fr 0.8fr 0.8fr 1fr 1fr;
 }
 
 .sheet-gear_col {
@@ -851,13 +907,13 @@ input.sheet-arrow:checked ~ div.sheet-body {
     display: block;
     margin-bottom: 2px;
     border: 1px #f26723 solid;
+    border-radius: 3px;
     padding: 2px;
 }
 
 input.sheet-arrow:checked ~ div.sheet-laf-gridbody {
     display: grid;
     margin-bottom: 2px;
-    border: 1px #f26723 solid;
 }
 
 input.sheet-hider:checked ~ span.sheet-body,
@@ -865,18 +921,20 @@ input.sheet-hider:checked ~ div.sheet-body {
     display: block;
     margin-bottom: 2px;
     border: 1px #f26723 solid;
+    border-radius: 3px;
 }
 
 input.sheet-hider:checked ~ div.sheet-laf-gridbody {
     display: grid;
     margin-bottom: 2px;
-    border: 1px #f26723 solid;
 }
 
 input.sheet-power:checked ~ div.sheet-laf-gridbody {
     display: grid;
     margin-bottom: 2px;
     border: 1px #f26723 solid;
+    border-radius: 3px;
+    margin-left: 3px;
 }
 
 .sheet-hidden {
@@ -964,8 +1022,8 @@ input.sheet-untrained[type="checkbox"] {
     width: 16px;
     height: 16px;
     position: relative;
-    top: 10px;
-    left: -5px;
+    top: 20px;
+    left: 2px;
     margin: -10px;
     cursor: pointer;
     z-index: 1;
@@ -977,33 +1035,34 @@ input.sheet-untrained[type="checkbox"] + span::before {
     position: relative;
     top: 0px;
     left: -5px;
-    color: #f26723;
+    /*    color: #f26723;*/
+    color: forestgreen;
     text-shadow: none;
     margin-right: 4px;
     line-height: 14px;
     text-align: center;
     display: inline-block;
     vertical-align: middle;
-    font-family: "Pictos";
-    content: "2";
+    /*    font-family: "Pictos";*/
+    content: "☑";
     width: 14px;
     height: 14px;
-    font-size: 1em;
+    font-size: 2em;
     box-shadow: none;
 }
 
-
 input.sheet-untrained[type="checkbox"]:checked + span::before {
     color: #f26723;
-    content: "D";
+    content: "☐";
     box-shadow: none;
 }
 
 
 /* Fake sheet-arrow checkbox */
-input.sheet-carried[type="checkbox"] {
+input.sheet-carried[type="checkbox"],
+input.sheet-delete[type="checkbox"] {
     opacity: 0;
-    width: 16px;
+    width: 16px !important;
     height: 16px;
     position: relative;
     top: 0px;
@@ -1013,10 +1072,11 @@ input.sheet-carried[type="checkbox"] {
     z-index: 1;
 }
 
-input.sheet-carried[type="checkbox"] + span::before {
+input.sheet-carried[type="checkbox"] + span::before,
+input.sheet-delete[type="checkbox"] + span::before {
     position: relative;
     top: 0px;
-    left: 0px;
+    left: -10px;
     color: #f26723;
     text-shadow: none;
     margin-right: 4px;
@@ -1030,6 +1090,10 @@ input.sheet-carried[type="checkbox"] + span::before {
     height: 14px;
     font-size: 1em;
     box-shadow: none;
+}
+
+input.sheet-delete[type="checkbox"] + span::before {
+    content: "#";
 }
 
 input.sheet-carried[type="checkbox"]:checked + span::before {
@@ -1042,7 +1106,7 @@ input.sheet-carried[type="checkbox"]:checked + span::before {
 /* Sheet crate */
 /* ------------------*/
 
-/* Hide actual sheet-arrow checkbox ---- */
+/* Hide actual sheet-arrow checkbox */
 input.sheet-crate[type="checkbox"] {
     opacity: 0;
     width: 16px;
@@ -1123,6 +1187,15 @@ input.sheet-power[type="checkbox"]:checked + span::before {
     box-shadow: none;
 }
 
+.sheet-shiptotalpower-field {
+    border: 1px solid #f26723;
+    border-radius: 3px;
+    width: 2.7em;
+    margin-bottom: 3px;
+    padding-left: 5px;
+    font-size: 1.1em;
+}
+
 /*----------------------------*/
 /* Roll Templates */
 /*----------------------------*/
@@ -1130,7 +1203,9 @@ input.sheet-power[type="checkbox"]:checked + span::before {
 /* Alt Rolltemplates */
 .sheet-rolltemplate-skill-attrib-alt.sheet-rolltemplate-darkmode .inlinerollresult,
 .sheet-rolltemplate-power-alt.sheet-rolltemplate-darkmode .inlinerollresult,
+.sheet-rolltemplate-talent-alt.sheet-rolltemplate-darkmode .inlinerollresult,
 .sheet-rolltemplate-combat-alt.sheet-rolltemplate-darkmode .inlinerollresult,
+.sheet-rolltemplate-combat-animal-alt.sheet-rolltemplate-darkmode .inlinerollresult,
 .sheet-rolltemplate-skill-general-alt.sheet-rolltemplate-darkmode .inlinerollresult,
 .sheet-rolltemplate-trade-broker-alt.sheet-rolltemplate-darkmode .inlinerollresult {
     color: #e5e5e5;
@@ -1180,12 +1255,11 @@ input.sheet-power[type="checkbox"]:checked + span::before {
 }
 
 .sheet-rolltemplate-alt .inlinerollresult {
-
     display: inline-block;
     height: 1em;
     background-color: #e8d4c8;
     align-content: center;
-    font-size: 30px;
+    font-size: 26px;
     border: 2px solid #f26723 !important;
 }
 
@@ -1195,19 +1269,36 @@ input.sheet-power[type="checkbox"]:checked + span::before {
     border: 2px solid #f26723;
 }
 
+.sheet-rolltemplate-alt .sheet-noborder .inlinerollresult {
+    border: 0 !important;
+}
+
 .sheet-rolltemplate-alt span {
     padding: 0px;
-    padding-top: 5px;
+    padding-top: 2px;
     text-shadow: none;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.1em;
     text-align: center;
-    padding-bottom: 10px;
+    padding-bottom: 2px;
     line-height: 25px;
+}
+
+.sheet-rolltemplate-alt span:empty {
+    display: none;
+}
+
+.sheet-rolltemplate-alt .sheet-rolltemplate-message > span.inlinerollresult {
+    border: 0 !important;
+    font-size: 20px;
 }
 
 .sheet-rolltemplate-alt-combat  {
     color: FireBrick !important;
+}
+
+.sheet-rolltemplate-alt-combat-animal  {
+    color: #641e16 !important;
 }
 
 .sheet-rolltemplate-alt-skill  {
@@ -1249,13 +1340,13 @@ button.sheet-tab {
     outline: none !important;
     cursor: pointer;
     z-index: 1;
-    width: 11vw;
+    width: 10.5vw;
     content: attr(title);
     display: inline;
     height: 35px;
     background: white;
-/*    padding-left: 10px;*/
-/*    padding-right: 10px;*/
+    /*    padding-left: 10px;*/
+    /*    padding-right: 10px;*/
     font-size: 1.3em;
     font-weight: bold;
     text-align: center;
@@ -1271,8 +1362,13 @@ button.sheet-but-prime {
 input.sheet-typeshow[value="pc"] ~ .sheet-type-pc,
 input.sheet-typeshow[value="npc"] ~ .sheet-type-npc,
 input.sheet-typeshow[value="animal"] ~ .sheet-type-animal,
+input.sheet-typeshow[value="robot"] ~ .sheet-type-robot,
 input.sheet-typeshow[value="ship"] ~ .sheet-type-ship,
 input.sheet-shiptypeshow[value="shipdetails"] ~ .sheet-type-shipdetails,
+input.sheet-shiptypeshow[value="shipcombat"] ~ .sheet-type-shipcombat,
+input.sheet-shiptypeshow[value="shipcrew"] ~ .sheet-type-shipcrew,
+input.sheet-shiptypeshow[value="shipslocker"] ~ .sheet-type-shipslocker,
+input.sheet-shiptypeshow[value="shipsledger"] ~ .sheet-type-shipsledger,
 input.sheet-shiptypeshow[value="shipnotes"] ~ .sheet-type-shipnotes,
 input.sheet-typeshow[value="vehicle"] ~ .sheet-type-vehicle,
 input.sheet-vehicletypeshow[value="vehicledetails"] ~ .sheet-type-vehicledetails,
@@ -1280,6 +1376,7 @@ input.sheet-vehicletypeshow[value="vehiclenotes"] ~ .sheet-type-vehiclenotes,
 input.sheet-tradetypeshow[value="passengers"] ~ .sheet-type-passengers,
 input.sheet-tradetypeshow[value="freight"] ~ .sheet-type-freight,
 input.sheet-tradetypeshow[value="speculative"] ~ .sheet-type-speculative,
+input.sheet-tradetypeshow[value="salvage"] ~ .sheet-type-salvage,
 input.sheet-tradetypeshow[value="tradelog"] ~ .sheet-type-tradelog,
 input.sheet-typeshow[value="trade"] ~ .sheet-type-trade,
 input.sheet-typeshow[value="help"] ~ .sheet-type-help,
@@ -1329,11 +1426,15 @@ input.sheet-tabstoggle[value="notes"] ~ .sheet-but-notes {
 }
 
 .sheet-vehiclenotes,
-.sheet-shipnotes {
+.sheet-shipnotes,
+.sheet-shipslocker,
+.sheet-shipsledger,
+.sheet-shipcrew {
     border: 0px !important;
 }
 
-span.sheet-shipcomponent {
+span.sheet-shipcomponent,
+span.sheet-shipcomponent2 {
     font-size: 1.2em;
     height: 24px;
     padding-left: 5px;
@@ -1343,6 +1444,10 @@ span.sheet-shipcomponent {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+}
+
+span.sheet-shipcomponent2 {
+    width: 100px;
 }
 
 span.sheet-shipdetail,
@@ -1385,6 +1490,20 @@ input.sheet-shiphead {
     padding-top: 2px;
     padding-bottom: 2px;
     height: auto;
+}
+
+.sheet-shipsledger_record {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr 0.6fr;
+}
+
+.sheet-shipsledger_record > input[type="text"],
+.sheet-shipsledger_record input[type="number"] {
+    width: 100px !important;
+}
+
+.sheet-shipsledger_record > input[type="text"]:nth-of-type(2) {
+    width: 45vw !important;
 }
 
 .sheet-critseverity {
@@ -1434,21 +1553,25 @@ button.btn.repcontrol_edit::after {
 .sheet-passengers,
 .sheet-freight,
 .sheet-speculative,
+.sheet-salvage,
 .sheet-tradelog{
     font-size: 1.1em !important;
 }
 
-.sheet-flex_button {
+.sheet-flex_content {
     display: flex;
     align-items: flex-end;
+    margin-top: 3px;
 }
 
-.sheet-flex_button div:first-child {
+.sheet-flex_content div:first-child {
     margin-right: 3px;
     width: 15%;
+    align-self: flex-start;
 }
 
-.sheet-flex_button div:nth-child(2) {
+
+.sheet-flex_content div:nth-child(2) {
     width: 85%;
 }
 
@@ -1457,6 +1580,11 @@ button.btn.repcontrol_edit::after {
     border: #f26723 solid 1px;
     padding: 2px;
     margin-top: 5px;
+}
+
+.sheet-speculative-subpanel h4 {
+    margin-left: 3px;
+    margin-bottom: 3px;
 }
 
 .sheet-speculative-tradecodes {
@@ -1507,7 +1635,11 @@ div.sheet-speculativegoods-row-pg {
     display: grid;
     grid-template-columns: 0.25fr 2fr 1fr 1fr 1fr 1fr 1fr;
     column-gap: 5px;
-    font-size: 1.2em;
+    font-size: 1.1em;
+}
+
+div.sheet-speculativegoods-row-pg span {
+    font-weight: bold;
 }
 
 div.sheet-speculativegoods-row-pg h5:first-child,
@@ -1522,6 +1654,9 @@ div.sheet-speculativegoods-row {
 div.sheet-speculativegoods-row input[type="number"] {
     width: 50px !important;
 }
+div.sheet-speculativegoods-row h5 {
+    margin-left: 0px;
+}
 div.sheet-speculativegoodstotal-row {
     display: grid;
     grid-template-columns: 120px 120px 120px 120px 120px 120px  120px;
@@ -1534,6 +1669,40 @@ div[data-groupname=repeating_speculative-freight-goods].repcontrol {
     display: none;
 }
 
+/* Hide the buttons for repeating group as salvage list is preset */
+.sheet-salvage > .repcontrol {
+    display: none;
+}
+
+.sheet-salvage-control {
+    width: 50%;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+}
+
+.sheet-salvage-control > button {
+    height: 28px;
+}
+
+.sheet-salvage-control > input {
+    margin-top: 2px;
+}
+
+div.sheet-salvage-row {
+/*    width: 50%;*/
+    display: grid;
+    grid-template-columns: 0.25fr 2fr 1fr 0.1fr 0.25fr 2fr 1fr;
+    column-gap: 5px;
+    font-size: 1.1em;
+}
+
+.sheet-rolltemplate-alt:has(.sheet-template-hazard-border) div:before,
+.sheet-rolltemplate-alt:has(.sheet-template-hazard-border) div:after {
+    border-top: 0;
+    border-left: 0;
+}
+
+.sheet-rolltemplate-alt > .sheet-template-hazard-border,
 .sheet-hazard-border {
     border: 5px solid pink;
     border-image: repeating-linear-gradient(
@@ -1578,6 +1747,7 @@ div.sheet-speculativestarport-row {
 
 .sheet-textright {
     text-align: right;
+    margin-right: 3px;
 }
 
 .sheet-textright-margin {
@@ -1591,6 +1761,11 @@ div.sheet-speculativestarport-row {
 
 .sheet-error {
     background: #f26723;
+}
+
+.sheet-errortext {
+    font-weight: bold;
+    color: #f26723;
 }
 
 .sheet-freight-info-row {
@@ -1656,6 +1831,12 @@ span.sheet-vehiclecomponent {
     margin-right: 5px;
 }
 
+.sheet-uwp-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 5px;
+}
+
 .sheet-uwpbutton {
     height: 23px !important;
     line-height: 0px !important;
@@ -1673,10 +1854,8 @@ span.sheet-vehiclecomponent {
     margin-top: 0px !important;
 }
 .sheet-groupfunds {
-    margin-left: auto;
-    margin-right:0;
     display: grid;
-    grid-template-columns: 2fr 2fr 0.75fr 0.25fr 3fr;
+    grid-template-columns: 2fr 1.5fr 1.5fr 0.25fr 3fr;
 }
 
 .sheet-groupfunds input[type="text"] {
@@ -1688,6 +1867,12 @@ span.sheet-vehiclecomponent {
     width: 50% !important;
     height: 25px !important;
 }
+
+.sheet-cargospace {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1.5fr 1.5fr;
+}
+
 
 /* New styles designated 'laf', a lot of grid stuff used to replace tables */
 
@@ -1697,6 +1882,15 @@ span.sheet-vehiclecomponent {
     width: 98%;
     display: grid;
     grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr 1fr 0.5fr 0.5fr 0.5fr 1fr 0.5fr 0.5fr 0.5fr;
+    column-gap: 10px;
+}
+
+.sheet-laf-morale {
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr 0.5fr;
     column-gap: 10px;
 }
 
@@ -1737,6 +1931,7 @@ span.sheet-vehiclecomponent {
 .sheet-laf-4colrow1111 {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: none;
+    margin-bottom: 3px;
 }
 
 .sheet-laf-4colrow1111 textarea {
@@ -1787,12 +1982,35 @@ span.sheet-vehiclecomponent {
 .sheet-laf-skillsummaryrow {
     grid-template-columns: 1px 1.5fr 1px 1.5fr 1px 1.5fr 1px 1.5fr 1px 1.9fr 1px 1.5fr 1px 2fr;
     grid-template-rows: none;
+    font-size: 1.1em;
 }
 
 .sheet-laf-skillrow {
-    grid-template-columns: 2.5fr 1.5fr 0.75fr 1fr 1.2fr 1fr 1fr 1fr;
+    grid-template-columns: 150px 130px 50px 70px 80px 1fr 1fr 1fr 1fr;
     grid-template-rows: none;
     margin-bottom: 3px;
+}
+
+.sheet-laf-skillrow-robot {
+    grid-template-columns: 150px 80px 80px 1fr 1fr 1fr 1fr 1fr;
+}
+
+.sheet-pcrobotskills {
+    display: none;
+}
+
+.sheet-robotshowskills {
+    margin-bottom: 3px !important;
+}
+
+span:has(.sheet-robotshowskills:checked) ~ .sheet-pcrobotskills  {
+    display: block;
+}
+
+.sheet-laf-skillrow button[type="compendium"] {
+    width: 18px;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .sheet-laf-skillrow span {
@@ -1822,6 +2040,11 @@ span.sheet-vehiclecomponent {
     margin-left: 20px !important;
 }
 
+.sheet-grid-c4r1 {
+    grid-column: 4;
+    grid-row: 1;
+}
+
 .sheet-grid-c6r1 {
     grid-column: 6;
     grid-row: 1;
@@ -1830,6 +2053,11 @@ span.sheet-vehiclecomponent {
 .sheet-grid-c6r2 {
     grid-column: 6;
     grid-row: 2;
+}
+
+.sheet-grid-c6r5 {
+    grid-column: 6;
+    grid-row: 5;
 }
 
 .sheet-grid-c8r1 {
@@ -1843,6 +2071,10 @@ span.sheet-vehiclecomponent {
 
 .sheet-gridspan19 {
     grid-column: 1 / 9;
+}
+
+.sheet-gridspan10 {
+    grid-column: 1 / 10;
 }
 
 .sheet-laf-skillrow button:first-child {
@@ -1874,6 +2106,15 @@ span.sheet-vehiclecomponent {
     margin-bottom: 3px;
 }
 
+.sheet-laf-gearrow span {
+    margin-top: 5px;
+    text-align: right;
+}
+
+.sheet-laf-gearrow input:nth-of-type(3) {
+    width: 3em !important;
+}
+
 .sheet-laf-finance {
     width: 300px;
     display: grid;
@@ -1895,7 +2136,7 @@ span.sheet-vehiclecomponent {
 .sheet-laf-otherwealth {
     grid-template-columns: 3fr 1fr 3fr;
     grid-template-rows: none;
-    margin-bottom: 3px;
+    margin-top: 3px;
 }
 
 .sheet-laf-otherwealth input[type="number"] {
@@ -1920,9 +2161,13 @@ span.sheet-vehiclecomponent {
 }
 
 .sheet-laf-power {
-    grid-template-columns: 0.15fr 1fr 1fr 0.25fr;
+    grid-template-columns: 0.15fr 120px 150px 100px 200px 1fr;
     grid-template-rows: none;
-    margin-bottom: 3px;
+    margin-left: 3px;
+}
+
+.sheet-laf-power select {
+    width: inherit;
 }
 
 .sheet-laf-power button {
@@ -1935,8 +2180,55 @@ span.sheet-vehiclecomponent {
     width: 99% !important;
 }
 
+.sheet-laf-custompower {
+    grid-template-columns: 0.25fr 170px 130px 0.3fr 0.3fr 0.7fr 0.65fr 0.9fr 0.5fr;
+    grid-template-rows: none;
+    column-gap: 5px;
+    width: 100%;
+}
+
+.sheet-laf-specialability {
+    grid-template-columns: 0.05fr 1fr 0.05fr;
+    grid-template-rows: none;
+    column-gap: 5px;
+    width: 100%;
+}
+
+.sheet-laf-specialability textarea {
+    grid-column: 1 / 4;
+    width: 98.5%;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.sheet-laf-custompower span,
+.sheet-laf-specialability span {
+    width: inherit;
+}
+
+.sheet-laf-custompower button,
+.sheet-laf-specialability button {
+    width: 25px !important;
+}
+
+.sheet-laf-custompower select {
+    width: inherit;
+}
+
+.sheet-laf-5colrow13111 {
+    grid-template-columns: 0.25fr 2fr 0.5fr 0.5fr 2fr;
+    grid-template-rows: none;
+    width: 100%;
+}
+
+
 .sheet-laf-armourlist {
-    grid-template-columns: 1.5fr 1fr 1.2fr 1.75fr 1.2fr 1fr 1.2fr;
+    grid-template-columns: 1.5fr 1fr 1.2fr 1.2fr 1.2fr 1fr 0.1fr 1.5fr 0.4fr;
+    margin-bottom: 3px;
+}
+
+.sheet-laf-armourlist-px {
+    grid-template-columns: 220px 1fr 1.2fr 1.2fr 1.2fr 1fr 0.1fr 1.5fr 0.4fr;
     margin-bottom: 3px;
 }
 
@@ -1946,35 +2238,57 @@ span.sheet-vehiclecomponent {
     margin-bottom: 3px;
 }
 
+.sheet-laf-armourlist input[type="checkbox"] {
+    outline: none;
+}
+
+.sheet-laf-armourlist select {
+    width: 100%;
+}
+
+.sheet-laf-armourlist > div {
+    width: max-content;
+}
+
 /* Do not know why I've had to do this but header spans just do not line up */
-.sheet-laf-header-offset span:nth-child(n + 3) {
-    margin-left: -10px;
+.sheet-laf-header-offset span: {
+    margin-left: 10px;
 }
 
 .sheet-laf-weaponlist {
-    grid-template-columns: 0.3fr 2fr 0.75fr 1fr 1fr 0.5fr 0.5fr 0.75fr 0.5fr 0.5fr 0.7fr;
+    grid-template-columns: 0.2fr 2fr 0.5fr 0.5fr 0.6fr 0.6fr 0.5fr 0.7fr 0.5fr 0.5fr 0.5fr 0.7fr 0.4fr;
     margin-bottom: 4px;
     margin-bottom: 4px;
 }
 
 .sheet-laf-weaponlist button {
     width: 25px;
+    margin-top: 0px !important;
 }
 
 .sheet-laf-weaponlist textarea {
-    grid-column: 1 / 12;
+    grid-column: 1 / 14;
 }
 
-.sheet-laf-weaponlist select {
-    width: 85px;
+.sheet-laf-weaponlist select:first-of-type {
+    width: 55px;
 }
+
+.sheet-laf-weaponlist select:nth-of-type(2) {
+    width: 70px;
+}
+
 
 .sheet-laf-weaponlist input {
     width: 100% !important;
 }
 
+.sheet-laf-weaponlist div {
+    margin-bottom: 5px;
+}
+
 .sheet-laf-ship {
-    grid-template-columns: 2fr 5fr 1fr 5fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 5fr 1fr 5fr 1fr 5fr 1fr 1fr;
     margin-bottom: 3px;
 }
 
@@ -2000,6 +2314,26 @@ span.sheet-vehiclecomponent {
     width: 80px !important;
 }
 
+.sheet-laf-shipcrew {
+    grid-template-columns: 0.1fr 0.75fr 0.1fr 0.75fr 0.15fr 0.2fr;
+    grid-template-rows: none;
+    margin-bottom: 3px;
+}
+
+.sheet-laf-shipcrew span {
+    margin-top: 3px;
+}
+
+.sheet-laf-shipcrew-skill {
+    grid-template-columns: 0.1fr 2fr 0.1fr 0.2fr 0.1fr 0.2fr 0.1fr 2fr 0.1fr 0.2fr 0.1fr;
+    grid-template-rows: none;
+    margin-bottom: 3px;
+}
+
+.sheet-laf-shipcrew-skill span {
+    margin-top: 3px;
+}
+
 .sheet-animal {
     font-size: 1.1em;
 }
@@ -2007,27 +2341,31 @@ span.sheet-vehiclecomponent {
     font-size: 0.9em;
 }
 
+.sheet-laf-diagnostics {
+    grid-template-columns: 1fr 1fr 3fr;
+    align-items: center;
+}
+
 .sheet-laf-animal {
-    width: 75%;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 0.2fr 0.2fr;
     align-items: center;
 }
 
 .sheet-laf-animal-sub {
-    width: 75%;
-    grid-template-columns: 0.1fr 1fr 0.25fr;
+/*    width: 75%;*/
+    grid-template-columns: 0.1fr 1fr 0.1fr;
 }
 
 .sheet-laf-animal-weapon {
-    grid-template-columns: 0.5fr 0.9fr 0.25fr 0.25fr 0.3fr 0.1fr;
+    grid-template-columns: 2fr 0.9fr 0.25fr 0.25fr 0.3fr 0.1fr;
 }
 
 .sheet-laf-animal-weapon input[type="text"]:first-child {
-    width: 90px !important;
+    width: 300px !important;
 }
 
 .sheet-laf-animal-init {
-    width: 75%;
+/*    width: 75%;*/
     grid-template-columns: 0.25fr 0.25fr 5fr;
 }
 
@@ -2039,7 +2377,7 @@ span.sheet-vehiclecomponent {
 }
 
 .sheet-laf-animal-detail {
-    grid-template-columns: 3fr 1fr 0.25fr;
+    grid-template-columns: 3fr 0.2fr 0.25fr;
 }
 
 .sheet-laf-animal-detail input {
@@ -2053,6 +2391,15 @@ span.sheet-vehiclecomponent {
 
 .sheet-laf-animal-cols {
     grid-column: 2 / 4;
+}
+
+.sheet-laf-robot {
+    grid-template-columns: 1fr 0.3fr 0.3fr 1fr 0.3fr 0.2fr 0.5fr;
+    align-items: center;
+}
+
+.sheet-laf-robot-sub {
+    grid-template-columns: 0.1fr 1fr 0.1fr 0.75fr;
 }
 
 .sheet-laf-ship-hardpoint.sheet-speculative-font {
@@ -2078,9 +2425,10 @@ span.sheet-vehiclecomponent {
 }
 
 .sheet-laf-vehicle-sensors {
-    width: 90% !important;
-    grid-template-columns: 2fr 0.25fr 0.25fr 0.1fr 5fr;
+/*    width: 90% !important;*/
+    grid-template-columns: 260px 0.25fr 0.25fr 0.1fr 5fr;
     margin-bottom: 3px;
+    font-size: 1.05em;
 }
 
 .sheet-laf-vehicle-sensors span,
@@ -2088,13 +2436,21 @@ span.sheet-vehiclecomponent {
     width: 90px !important;
 }
 
+.sheet-laf-vehicle-sensors input[type="text"] {
+    width: 260px !important;
+}
+
 .sheet-laf-vehicle-sensors button {
     width: 25px !important;
 }
 
+.sheet-laf-vehicle-sensors button div {
+    font-size: 0.6em;
+}
+
 .sheet-laf-vehicle-textarea {
     display: block;
-    width: 90% !important;
+    width: 98% !important;
     margin-left: auto;
     margin-right: auto;
     height: 60px;
@@ -2120,6 +2476,7 @@ span.sheet-vehiclecomponent {
     width: 100%;
     grid-template-columns: 1.25fr 2fr 1fr 1fr 1fr 1fr 1.5fr 1.5fr 0.25fr;
     grid-auto-flow: column;
+    align-items: center;
 }
 
 /*.sheet-laf-vehicle-weaponsrow span {*/
@@ -2127,25 +2484,43 @@ span.sheet-vehiclecomponent {
 /*}*/
 
 .sheet-laf-ship-components {
-    grid-template-columns: 2fr 3fr 1fr 1fr 0.35fr;
-    margin-bottom: 2px;
+    grid-template-columns: 1.5fr 3.5fr 0.5fr 1fr 1.5fr 0.2fr;
+    margin-top: 5px;
+}
+
+/*.sheet-laf-ship-components-rep {*/
+/*    grid-template-columns: 1.2fr 2.4fr 0.45fr 0.8fr 1fr;*/
+/*    margin-top: 5px;*/
+/*    margin-right: 2px;*/
+/*}*/
+
+/*.sheet-laf-ship-components-rep > input:last-of-type {*/
+/*    margin-right: 5px;*/
+/*    margin-bottom: 2px;*/
+/*}*/
+
+.sheet-laf-ship-components > span {
+    margin-top: 3px;
 }
 
 .sheet-laf-ship-components-template {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas: "components components components crew"
-    "components components components runningcosts"
-    "components components components power"
-    "components components components xxx"
-    "components components components xxx"
-    "components components components xxx";
+    grid-template-columns: 4fr 1fr;
+    grid-template-areas: "components crew"
+    "components runningcosts"
+    "components power"
+    "components xxx"
+    "components xxx";
 }
 
 .sheet-laf-ship-components-p {
     margin-right: 3px;
     grid-area: components;
     font-size: 1em;
+}
+
+.sheet-laf-ship-components-p > div:first-of-type > span {
+    border-bottom: 2px solid #f26723;
 }
 
 .sheet-laf-ship-components input {
@@ -2159,12 +2534,12 @@ span.sheet-vehiclecomponent {
 }
 
 .sheet-laf-ship-component-hider {
-    grid-column: 5;
+    grid-column: 6;
 }
 
 span.sheet-laf-ship-component-hider {
     margin-top: -25px;
-    margin-bottom: 10px;
+    /*    margin-bottom: 10px;*/
 }
 
 input.sheet-laf-ship-component-hider {
@@ -2172,21 +2547,40 @@ input.sheet-laf-ship-component-hider {
 }
 
 .sheet-laf-ship-component-rep {
-    grid-column: 1 / 6;
+    grid-column: 1 / 7;
+    margin-top: 10px;
+    width: 100%;
 }
 
 .sheet-laf-ship-component-rep .repcontrol {
     height: 1.5em;
 }
 
+.sheet-laf-ship-component-rep .repitem .sheet-laf-ship-components span {
+/*    width: 132px;*/
+}
+
+/*.sheet-laf-ship-component-rep .repitem .sheet-laf-ship-components input[type="text"]:first-of-type {*/
+/*    width: 195px !important;*/
+/*    margin-left: 6px;*/
+/*}*/
+
+.sheet-laf-ship-component-rep .repitem .sheet-laf-ship-components input[type="text"]:not(:first-of-type) {
+/*    width: 32px;*/
+}
+
 .sheet-laf-ship-component-rep2 {
-    grid-column: 1 / 7;
+    grid-column: 1 / 8;
 }
 
 .sheet-laf-ship-crew-p {
     grid-area: crew;
-    width: 200px;
     margin-bottom: 3px;
+}
+
+.sheet-laf-ship-crew-p > textarea {
+    width: 94%;
+    height: 100px !important;
 }
 
 /*.sheet-laf-ship-crew-p textarea {*/
@@ -2197,25 +2591,20 @@ input.sheet-laf-ship-component-hider {
 .sheet-laf-ship-runningcosts-p {
     display: grid;
     grid-area: runningcosts;
-    font-size: 0.9em;
     margin-bottom: 3px;
+    font-size: 17px;
 }
 
 .sheet-laf-ship-power-p h4,
 .sheet-laf-ship-runningcosts-p h4 {
     margin-bottom: 15px;
-    font-size: 1em !important;
-}
-
-.sheet-laf-ship-power-p span,
-.sheet-laf-ship-runningcosts-p span {
-    font-size: 1.4em;
+    font-size: 20px !important;
 }
 
 .sheet-laf-ship-power-p {
     display: grid;
     grid-area: power;
-    font-size: 0.9em;
+    font-size: 17px;
 }
 
 .sheet-laf-ship-power-p input,
@@ -2227,12 +2616,79 @@ input.sheet-laf-ship-component-hider {
 
 .sheet-laf-ship-power-p input[type="number"] {
     font-size: 1.2em !important;
+    width: 50% !important;
 }
 
 .sheet-laf-ship-power-p h5,
 .sheet-laf-ship-runningcosts-p h5 {
     margin-top: 10px;
     margin-bottom: 3px;
+}
+
+.sheet-laf-ship-power-p > span:nth-of-type(even),
+.sheet-laf-ship-power-p .repitem > span {
+    display: flex;
+}
+
+.sheet-laf-ship-power-combat {
+    display: grid;
+    grid-template-columns: 2fr 0.5fr 1fr 0.75fr 0.75fr 0.1fr 0.5fr 2fr 0.5fr 1fr 0.75fr 0.75fr 0.2fr;
+}
+
+.sheet-laf-ship-power-combat > input[type="number"] {
+    margin-top: -3px;
+}
+
+.sheet-laf-ship-power-combat > input[type="text"] {
+    font-weight: bold;
+}
+
+.sheet-laf-ship-power-combat-wrapper > .sheet-laf-ship-power-combat > span {
+    margin-left: 5px;
+}
+
+.sheet-power-offline-bg {
+    background: green;
+}
+
+.sheet-power-offline {
+    display: none !important;
+}
+
+label:has(.sheet-power-offline), .sheet-power-offline + label {
+    text-align: center;
+    border: 1px solid #f26723;
+    border-radius: 3px;
+    width: 15px;
+    color: white;
+    background-color: red;
+    font-size: 12px;
+    padding-top: 3px;
+    height: 22px;
+    margin-top: -2px;
+}
+
+label:has(.sheet-power-offline:checked), .sheet-power-offline:checked + label {
+    background-color: green;
+    height: 22px;
+    margin-top: -2px;
+}
+
+label:has(.sheet-power-offline):after, .sheet-power-offline + label:after {
+    font-family: "Pictos";
+    content: 'd';
+    background-color: red;
+    padding-left: 7px;
+    height: 22px;
+    margin-top: -2px;
+}
+
+label:has(.sheet-power-offline:checked):after,
+.sheet-power-offline:checked + label:after {
+    font-family: "Pictos";
+    content: 'f';
+    background-color: green;
+    height: 22px;
 }
 
 .sheet-laf-width-99 {
@@ -2257,7 +2713,43 @@ input.sheet-laf-ship-component-hider {
     grid-template-columns: 1fr 1fr 3fr 1fr 2fr 0.25fr;
 }
 
-.sheet-laf-ship-hulldamage span {
+.sheet-laf-ship-combat-bandwidth {
+    padding-top: 5px;
+    display: grid;
+    grid-template-columns: 2fr 0.5fr 0.5fr 0.1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 1fr;
+}
+
+.sheet-laf-ship-combat-bandwidth > span {
+    text-align: right;
+    margin-right: 3px;
+    margin-top: 3px;
+}
+
+.sheet-laf-ship-combat-bandwidth > span:nth-of-type(5) {
+    border: #f26723 solid 1px !important;
+    border-radius: 3px;
+    margin-bottom: 3px;
+    margin-top: 0;
+    text-align: left;
+    padding-left: 3px;
+    padding-top: 2px;
+}
+
+.sheet-laf-ship-software {
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: 1fr 2fr 1fr 1fr 0.5fr 5fr;
+}
+
+.sheet-laf-ship-software > input[type="text"] {
+    width: auto;
+}
+
+.sheet-laf-ship-combat-status {
+    grid-template-columns: 1fr 0.5fr 1fr 0.75fr 0.75fr 2fr 1fr 0.5fr 1fr 0.5fr 1fr 0.75fr 0.75fr 0.1fr;
+}
+
+.sheet-laf-ship-combat-status span {
     margin-top: 3px;
 }
 
@@ -2266,24 +2758,248 @@ input.sheet-laf-ship-component-hider {
     margin-left: -5px !important;
 }
 
-.sheet-laf-ship-hardpoint {
-    column-gap: 9px;
-    margin-top: 3px !important;
-    background-color: lightgray;
-    grid-template-columns: 0.25fr 2.2fr 1fr 1fr 1.5fr 1fr 0.5fr 0.5fr 1.5fr 0.25fr;
+.sheet-shipcombat-pilot-panel,
+.sheet-shipcombat-engineer-panel,
+.sheet-shipcombat-computer-panel,
+.sheet-shipcombat-sensor-panel,
+.sheet-shipcombat-gunners-panel {
+    display: block;
+    animation-name: slide-in;
+    animation-duration: 1s;
+    opacity: 1;
 }
 
-.sheet-laf-ship-hardpoint-px {
-    column-gap: 9px;
-    grid-template-columns: 120px 120px 3em 3em 50px 75px 4em 120px 3em 25px;
+input.sheet-shipcombat-pilot-toggle,
+input.sheet-shipcombat-engineer-toggle,
+input.sheet-shipcombat-computer-toggle,
+input.sheet-shipcombat-sensor-toggle,
+input.sheet-shipcombat-gunners-toggle {
+    height: 20px !important;
+    width: 20px;
+    margin-bottom: 5px;
+}
+
+h3:has(input.sheet-shipcombat-pilot-toggle:not(:checked)) ~ .sheet-shipcombat-pilot-panel,
+h3:has(input.sheet-shipcombat-engineer-toggle:not(:checked)) ~ .sheet-shipcombat-engineer-panel,
+h3:has(input.sheet-shipcombat-computer-toggle:not(:checked)) ~ .sheet-shipcombat-computer-panel,
+h3:has(input.sheet-shipcombat-sensor-toggle:not(:checked)) ~ .sheet-shipcombat-sensor-panel,
+h3:has(input.sheet-shipcombat-gunners-toggle:not(:checked)) ~ .sheet-shipcombat-gunners-panel {
+    display: none;
+    opacity: 0;
+}
+
+/*.sheet-resetbutton {*/
+/*    font-family: "Pictos";*/
+/*    color: #f26723;*/
+/*    font-size: 0.8em;*/
+/*    margin-left: -1px;*/
+/*    margin-top: 3px;*/
+/*}*/
+
+.sheet-laf-ship-thrust-panel {
+    margin-bottom: 3px;
+    display: flex;
+}
+
+.sheet-laf-ship-thrust-panel > span {
+    width: 80px;
+    margin-top: 5px;
+}
+
+.sheet-laf-ship-thrust-panel > select {
+    width: fit-content;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.sheet-laf-ship-thrust-panel > table {
+    width: 100%;
+    grid-column: 1/5;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sheet-laf-ship-thrust-panel > div > table td {
+    width: 20px;
+}
+
+.sheet-laf-ship-thrust-panel td .label-checkbox {
+/* cursor: pointer; */
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 3px;
+}
+
+.sheet-laf-ship-thrust-panel td .label-checkbox.label-checkbox-disabled {
+    pointer-events: none;
+}
+
+.sheet-laf-ship-thrust-panel td .label-checkbox.label-checkbox-disabled span {
+    text-decoration: line-through;
+}
+
+.sheet-laf-ship-thrust-panel td .label-checkbox input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.sheet-laf-ship-thrust-panel td .label-checkbox span {
+    padding: 5px 6px;
+    border: 1px solid #f26723;
+    display: inline-block;
+    color: #202020;
+    border-radius: 3px;
+    background: #f5f5f5;
+    user-select: none;
+    width: 15px;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.sheet-laf-ship-thrust-panel td .label-checkbox input:checked + span {
+    box-shadow: inset 1px 2px 5px #777;
+    transform: translateY(1px);
+    background: #f26723;
+}
+
+.sheet-laf-ship-criticaldamage {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 10fr 1fr;
+}
+
+.sheet-laf-ship-criticaldamage > span {
+    text-align: right;
+    margin-top: 5px;
+    font-size: 1.1em;
+}
+
+.sheet-laf-ship-criticaldamage > span > span {
+    font-size: 18px;
+}
+
+.sheet-laf-ship-criticaldamage > input,
+.sheet-laf-ship-criticaldamage > button {
+    margin-top: 3px !important;
+    padding-right: 10px;
+}
+
+.sheet-laf-ship-criticaldamage > span:nth-of-type(3),
+.sheet-laf-ship-criticaldamage > span:nth-of-type(5) {
+    text-align: left;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.sheet-laf-ship-criticalhit-cb {
+    grid-column: 8;
+    grid-row: 1;
+}
+
+.sheet-laf-ship-criticalhit {
+    grid-template-columns: 1fr 0.5fr 0.2fr 0.1fr 4fr 0.05fr 0.15fr;
+    margin-top: 3px;
+}
+
+.sheet-laf-ship-criticalhit > input[type="text"] {
+    grid-column: 2/10;
+    width: 99.2%;
+}
+
+.sheet-laf-ship-criticalhit > span {
+    font-size: 1.1em;
+    display:inline-table;
+    height: 28px;
+    max-height: 100px;
+    padding: 0;
+    padding-left: 3px;
+    margin-bottom: 3px;
+    white-space: break-spaces;
+}
+
+.sheet-laf-ship-criticalhit > span:nth-of-type(4) {
+    width: 400px;
+    font-size: 15px;
+    height: 26px;
+    line-height: 25px;
+}
+
+.sheet-laf-ship-criticalhit > span:not(.sheet-redborder) {
+    margin-top: 3px;
+}
+
+.sheet-laf-ship-criticalhit > select {
+    width: fit-content;
+}
+
+.sheet-laf-ship-criticalhit.sheet-redborder {
+    margin-bottom: 6px;
+}
+
+.sheet-laf-ship-combat-skills-px {
+    grid-template-columns: 391px 60px 57px 63px 61px;
+    margin-bottom: 3px;
+    font-size: 1em;
+}
+
+.sheet-laf-ship-combat-skills {
+    grid-template-columns: 400px 1.5fr 1.75fr 1.8fr 24px 1fr;
+    margin-bottom: 3px;
+    font-size: 1em;
+}
+
+.sheet-laf-ship-combat-skills > input[type="text"] {
+    width: 400px;
+}
+
+.sheet-laf-ship-combat-skills > button > .sheet-weaponrollbutton {
+    margin-top: 1px;
+}
+
+.sheet-laf-ship-combat-skills > div {
+    display: flex;
+}
+
+.sheet-laf-ship-combat-skills > div > input[type="text"] {
+    width: 250px;
+    margin-right: 3px;
+}
+.sheet-laf-ship-combat-skills > div > input[type="text"]:nth-of-type(2) {
+    width: 45px;
+}
+
+.sheet-hardpoints-ref {
+    background-color: cyan;
+}
+
+.repitem:not(:first-child) > .sheet-laf-ship-hardpoint > span {
+    display: none;
+}
+
+.sheet-laf-ship-hardpoint {
+    column-gap: 3px;
+    margin-top: 3px !important;
+    background-color: lightgray;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr 1fr 0.5fr 0.5fr 0.5fr 0.5fr 0.1fr 0.1fr;
+}
+
+.sheet-laf-ship-hardpoint-abs {
+    grid-template-columns: 85px 120px 4em 4em 89px 60px 4em 85px 3em 2.1em
+}
+
+.sheet-laf-ship-hardpoint > label {
+    margin-top: 0px !important;
 }
 
 .sheet-laf-ship-hardpoint input,
 .sheet-laf-ship-hardpoint-px input {
-    width: 120px
+    width: 120px;
 }
 
-.sheet-laf-ship-hardpoint-px span,
 .sheet-laf-ship-hardpoint span {
     margin-top: 3px !important;
     font-weight: bold;
@@ -2300,12 +3016,16 @@ input.sheet-laf-ship-component-hider {
     font-weight: bold;
 }
 
+.sheet-laf-ship-hardpoint>.sheet-weaponroll {
+    margin-top: 0px !important;
+}
+
 .sheet-laf-ship-costtext {
-    width: 70px !important;
+    width: 90px !important;
 }
 
 .sheet-laf-ship-rangetext {
-    width: 50px !important;
+    width: 80px !important;
 }
 
 .sheet-laf-ship-combattext {
@@ -2313,7 +3033,7 @@ input.sheet-laf-ship-component-hider {
 }
 
 .sheet-laf-ship-traitstext {
-    width: 120px !important;
+    width: 85px !important;
 }
 
 .sheet-laf-custom-characteristics {
@@ -2398,40 +3118,6 @@ input.sheet-laf-ship-component-hider {
     margin-right: 3px;
 }
 
-/*
-.sheet-auto-expand {
-  position: relative;
-  cursor: text;
-  word-wrap: break-word;
-  box-sizing: border-box;
-}
-
-.sheet-auto-expand span {
-  visibility: hidden;
-  white-space: pre-wrap;
-  display: block;
-}
-
-.sheet-auto-expand textarea {
-  position: absolute;
-  overflow: hidden;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  margin: 0;
-  resize: none;
-  height: 100%;
-  min-height: 20px;
-  word-wrap: break-word;
-  padding: inherit;
-  font: inherit;
-  color: inherit;
-  text-transform: inherit;
-  letter-spacing: inherit;
-  text-align: inherit;
-  box-sizing: border-box;
-}
-*/
 .largedialog textarea {
     height: 60px;
 }
@@ -2448,12 +3134,21 @@ input.sheet-laf-ship-component-hider {
     grid-template-columns: 2fr 1fr 1fr;
 }
 
-/*.sheet-power-detail input:first-child {*/
-/*    width: 40% !important;*/
-/*}*/
-
 .sheet-power-detail span:nth-child(2) {
     text-align: right;
+    margin-top: 5px;
+}
+
+.sheet-power-rating {
+    background-color: yellow;
+}
+
+.sheet-power-rating-variable {
+    background-color: lightgoldenrodyellow;
+}
+
+.sheet-power-rating-error {
+    background-color: #ff6666;
 }
 
 .sheet-wide-button {
@@ -2486,8 +3181,11 @@ input.sheet-laf-ship-component-hider {
 
 .sheet-npc-movement {
     display: grid;
-    width: 50%;
-    grid-template-columns: 0.5fr 0fr 1fr 1fr;
+    grid-template-columns: 0.5fr 1.5fr 0.2fr 0.4fr 1fr;
+}
+
+.sheet-npc-movement span {
+    font-size: 1.2em;
 }
 
 .sheet-laf-vehicle-mount {
@@ -2555,6 +3253,10 @@ input.sheet-subsidizedtrade-boolean:not([value='1']) ~ div .sheet-subsidizedtrad
     display: none;
 }
 
+input.sheet-dismiss-dropbar-help:not([value='0']) ~ div .sheet-laf-compendium-drop-help {
+    display: none;
+}
+
 .sheet-laf-logo {
     margin-left: auto;
     margin-right: auto;
@@ -2578,12 +3280,16 @@ input.sheet-subsidizedtrade-boolean:not([value='1']) ~ div .sheet-subsidizedtrad
     margin-left: -3px;
 }
 
-/* Corner border */
-/*.charsheet {*/
-/*    position: relative;*/
-/*    background-color: #ededed;*/
-/*    border: 2px solid #f26723;*/
-/*}*/
+.sheet-compendium-btn-rel {
+    position: relative;
+    top: -3px;
+    right: 0;
+    height: 16px !important;
+    width: 16px;
+    font-size: 15px !important;
+    padding: 2px 2px 4px 2px !important;
+    align-self: baseline;
+}
 
 .charsheet:before {
     position: absolute;
@@ -2616,7 +3322,7 @@ body.sheet-darkmode .charsheet:after {
 .sheet-laf-border-corner {
     position: relative;
     background-color: #ededed;
-    border: 2px solid #f26723;
+    border: 2px solid #f26723 !important;
 }
 
 .sheet-laf-border-corner:before {
@@ -2637,12 +3343,104 @@ body.sheet-darkmode .charsheet:after {
     border-left: 30px solid transparent;
 }
 
+.sheet-laf-sheet-buttons {
+    margin-left: -5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    padding-top: 3px;
+    padding-left: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #f2672322;
+}
+
 .sheet-traveller-logo {
     height: 90px;margin-left: -10px;
 }
 
 .sheet-mongoose-logo {
     height: 90px;margin: 0 0 0 auto;
+}
+
+/* Compendium Styling */
+.ui-dialog .charsheet button[type=compendium] {
+    font-size: 1em;
+    height: 20px;
+    color: #f26723;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 2px;
+    padding-top: 3px;
+    /*    margin-left: -3px;*/
+    background: white;
+}
+
+.sheet-floating_compendium {
+    margin-top: -3px !important;
+    margin-left: 10px !important;
+}
+
+.sheet-floating_compendium_info {
+    margin-top: -6px !important;
+}
+
+.sheet-floating_compendium_button {
+    margin-top: 3px !important;
+    float: right;
+}
+
+.sheet-laf-dismiss {
+    font-family: "Pictos";
+    color: #f26723;
+    font-size: 0.8em;
+    float: right;
+    margin-right: 3px;
+    cursor: grab;
+}
+
+.sheet-laf-compendium-drop-target {
+    background: repeating-linear-gradient(45deg, #f2672333, #f2672333 10px, transparent 10px, transparent 20px);
+    margin-bottom: 10px;
+    width: auto;
+    height: 30px;
+}
+
+.sheet-laf-compendium-drop-target.dropping {
+    background: repeating-linear-gradient(45deg, #f26723, #f26723 10px, transparent 10px, transparent 20px);
+}
+
+.sheet-laf-compendium-drop-target h4 {
+    margin-top: 7px;
+}
+
+.sheet-laf-compendium-button,
+.sheet-laf-compendium-drop-target>button[type="compendium"] {
+    position: relative;
+    float: right;
+    margin-top: -26px !important;
+    margin-right: 15px !important;
+    height: 18px !important;
+}
+
+.sheet-laf-compendium-drop-symbol {
+    display: block;
+    width: 50px;
+    height: 50px;
+    font-size: 80px;
+    padding: 0px;
+    padding-top: 4px;
+    margin-top: -30px;
+    float: right;
+    text-align: center;
+    text-anchor: middle;
+    line-height: 50px;
+    margin-right: 1px;
+    color: #f26723;
+    rotate: -45deg;
+}
+
+.sheet-laf-compendium-accept-input {
+    display: none;
 }
 
 /* ---------------------------------------------------------------------
