@@ -1,3 +1,38 @@
+# 2026-09-15
+
+Add {Acid|Mana|Void} {Ball|Bolt} to weapon attacks.
+    Probably not helpful unless you own Arcane
+Add bone & other as item materials
+
+
+# 2026-08-??
+
+Fix RR Popup @snowdragon
+
+# 2026-08-21
+
+Fix an issue causing creature DB to be trashed.  Simple fix while I rewrite all
+the DBs.
+
+# 2026-08-03
+
+Post GenCon updates.
+
+- Updates to some of the options.  
+
+# 2026-07-30
+
+- Another attempt to hide initiative tracker on PC sheets
+
+# 2026-07-28
+
+The pre-Gencon release.  Been a while with other things.  
+
+- Add a button to hide the initiative tracker on PC sheets
+- Partial secret support
+- Add basic fighting style support
+- Fix TP tests
+
 # 2026-06-16
 
 - Add edit notes to the creature sheet
